@@ -21,6 +21,9 @@ module.exports.hello = async event => {
 
   var params = {
     TableName: 'my-first-service-dev',
+    Key: {
+      id: "S"
+    },
     Item: {
         "id": '123456789'
     },
