@@ -12,8 +12,8 @@ module.exports.hello = async event => {
     },
     body: JSON.stringify(
       {
-        message: "Go Serverless v1.0! FIRST CI/CD WITH SERVERLESS! Please go to eu-central-1",
-        input: event
+        message: "Great and Once more!!!!",
+        //input: event
       },
       null,
       2
