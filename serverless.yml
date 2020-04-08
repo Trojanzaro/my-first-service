@@ -40,7 +40,6 @@ functions:
           path: hello
           method: get
           cors: true
-
 resources:
   Resources:
     TodosDynamoDbTable:
