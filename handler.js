@@ -25,7 +25,7 @@ module.exports.hello = async event => {
       id: "S"
     },
     Item: {
-        "id": '123456789'
+        "id": event.queryStringParameters['id']
     },
 };
 
@@ -33,7 +33,7 @@ module.exports.hello = async event => {
     if (err) throw err;
     if (data.Item === undefined) {
       responseStatus = 404;
-      responseBody.data = 'Error! Entry Not found';
+      responseBody.data = 'Error! Entry: ' + event.queryStringParameters['id'] + ' Not found';
     } else {
       responseBody.data = data.Item;
     }
@@ -45,6 +45,127 @@ module.exports.hello = async event => {
     body: JSON.stringify(responseBody, null, 2)
   };
 
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
+  // event = {
+  //   "resource": "/hello",
+  //   "path": "/hello",
+  //   "httpMethod": "GET",
+  //   "headers": {
+  //     "Accept": "*/*",
+  //     "Accept-Encoding": "gzip, deflate, br",
+  //     "Cache-Control": "no-cache",
+  //     "CloudFront-Forwarded-Proto": "https",
+  //     "CloudFront-Is-Desktop-Viewer": "true",
+  //     "CloudFront-Is-Mobile-Viewer": "false",
+  //     "CloudFront-Is-SmartTV-Viewer": "false",
+  //     "CloudFront-Is-Tablet-Viewer": "false",
+  //     "CloudFront-Viewer-Country": "GR",
+  //     "Host": "vudo262w03.execute-api.eu-central-1.amazonaws.com",
+  //     "Postman-Token": "9ef0dbc6-0c0f-4ae2-b92f-4fb7f4cff5a6",
+  //     "User-Agent": "PostmanRuntime/7.24.0",
+  //     "Via": "1.1 5d5650d27c767174762251d7b9000c4a.cloudfront.net (CloudFront)",
+  //     "X-Amz-Cf-Id": "eGmIVrz6njcvv3dUTC5LRWU3JRcVHeJVm9zJVhC_LwI4AuyQnQo-mA==",
+  //     "X-Amzn-Trace-Id": "Root=1-5e8de015-05bf10b8020dcfc853fe5b1e",
+  //     "X-Forwarded-For": "188.117.225.179, 130.176.39.145",
+  //     "X-Forwarded-Port": "443",
+  //     "X-Forwarded-Proto": "https"
+  //   },
+  //   "multiValueHeaders": {
+  //     "Accept": [
+  //       "*/*"
+  //     ],
+  //     "Accept-Encoding": [
+  //       "gzip, deflate, br"
+  //     ],
+  //     "Cache-Control": [
+  //       "no-cache"
+  //     ],
+  //     "CloudFront-Forwarded-Proto": [
+  //       "https"
+  //     ],
+  //     "CloudFront-Is-Desktop-Viewer": [
+  //       "true"
+  //     ],
+  //     "CloudFront-Is-Mobile-Viewer": [
+  //       "false"
+  //     ],
+  //     "CloudFront-Is-SmartTV-Viewer": [
+  //       "false"
+  //     ],
+  //     "CloudFront-Is-Tablet-Viewer": [
+  //       "false"
+  //     ],
+  //     "CloudFront-Viewer-Country": [
+  //       "GR"
+  //     ],
+  //     "Host": [
+  //       "vudo262w03.execute-api.eu-central-1.amazonaws.com"
+  //     ],
+  //     "Postman-Token": [
+  //       "9ef0dbc6-0c0f-4ae2-b92f-4fb7f4cff5a6"
+  //     ],
+  //     "User-Agent": [
+  //       "PostmanRuntime/7.24.0"
+  //     ],
+  //     "Via": [
+  //       "1.1 5d5650d27c767174762251d7b9000c4a.cloudfront.net (CloudFront)"
+  //     ],
+  //     "X-Amz-Cf-Id": [
+  //       "eGmIVrz6njcvv3dUTC5LRWU3JRcVHeJVm9zJVhC_LwI4AuyQnQo-mA=="
+  //     ],
+  //     "X-Amzn-Trace-Id": [
+  //       "Root=1-5e8de015-05bf10b8020dcfc853fe5b1e"
+  //     ],
+  //     "X-Forwarded-For": [
+  //       "188.117.225.179, 130.176.39.145"
+  //     ],
+  //     "X-Forwarded-Port": [
+  //       "443"
+  //     ],
+  //     "X-Forwarded-Proto": [
+  //       "https"
+  //     ]
+  //   },
+  //   "queryStringParameters": {
+  //     "id": "123456789"
+  //   },
+  //   "multiValueQueryStringParameters": {
+  //     "id": [
+  //       "123456789"
+  //     ]
+  //   },
+  //   "pathParameters": null,
+  //   "stageVariables": null,
+  //   "requestContext": {
+  //     "resourceId": "kizguo",
+  //     "resourcePath": "/hello",
+  //     "httpMethod": "GET",
+  //     "extendedRequestId": "Kq_zVHzWliAFowQ=",
+  //     "requestTime": "08/Apr/2020:14:30:45 +0000",
+  //     "path": "/dev/hello",
+  //     "accountId": "783206811116",
+  //     "protocol": "HTTP/1.1",
+  //     "stage": "dev",
+  //     "domainPrefix": "vudo262w03",
+  //     "requestTimeEpoch": 1586356245248,
+  //     "requestId": "7f3e9408-713a-4b56-a582-cb65f63848a0",
+  //     "identity": {
+  //       "cognitoIdentityPoolId": null,
+  //       "accountId": null,
+  //       "cognitoIdentityId": null,
+  //       "caller": null,
+  //       "sourceIp": "188.117.225.179",
+  //       "principalOrgId": null,
+  //       "accessKey": null,
+  //       "cognitoAuthenticationType": null,
+  //       "cognitoAuthenticationProvider": null,
+  //       "userArn": null,
+  //       "userAgent": "PostmanRuntime/7.24.0",
+  //       "user": null
+  //     },
+  //     "domainName": "vudo262w03.execute-api.eu-central-1.amazonaws.com",
+  //     "apiId": "vudo262w03"
+  //   },
+  //   "body": null,
+  //   "isBase64Encoded": false
+  // }
 };
