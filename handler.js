@@ -1,23 +1,44 @@
 "use strict";
 const { tagEvent } = require("./serverless_sdk");
 
+var AWS = require('aws-sdk');
+AWS.config.update({ region: 'eu-central-1' });
+const docClient = new AWS.DynamoDB.DocumentClient({ region: 'eu-central-1' });
+
 module.exports.hello = async event => {
   tagEvent("custom-tag", "hello world", { custom: { tag: "data" } });
+  var responseStatus = 200;
+  var responseHeaders = {
+    "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+    "Access-Control-Allow-Credentials": true // Required for cookies, authorization headers with HTTPS
+  };
+  var responseBody = {
+    message: "Succesful Deploy",
+    data: null,
+    input: event
+  };
+
+  var params = {
+    TableName: 'my-first-service-dev',
+    Item: {
+        "id": '123456789'
+    },
+};
+
+  await docClient.get(params, (err, data) => {
+    if (data.Item === null) {
+      responseStatus = 404;
+      responseBody.data = 'Error! Entry Not found';
+
+    } else {
+      responseBody.data = data.Item;
+    }
+  }).promise();
 
   return {
-    statusCode: 200,
-    headers: {
-      "Access-Control-Allow-Origin": "*", // Required for CORS support to work
-      "Access-Control-Allow-Credentials": true // Required for cookies, authorization headers with HTTPS
-    },
-    body: JSON.stringify(
-      {
-        message: "Great and Once more!!!!",
-        //input: event
-      },
-      null,
-      2
-    )
+    statusCode: responseStatus,
+    headers: responseHeaders,
+    body: JSON.stringify(responseBody, null, 2)
   };
 
   // Use this code if you don't use the http event with the LAMBDA-PROXY integration
