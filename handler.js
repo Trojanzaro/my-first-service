@@ -22,10 +22,10 @@ module.exports.hello = async event => {
   var params = {
     TableName: 'my-first-service-dev',
     Key: {
-      id: "S"
+      id: event.queryStringParameters['id']
     },
     Item: {
-        "id": event.queryStringParameters['id']
+        id: event.queryStringParameters['id']
     },
 };
 
