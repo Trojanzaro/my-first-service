@@ -16,7 +16,7 @@ module.exports.hello = async event => {
   var responseBody = {
     message: "Succesful Deploy",
     data: null,
-    input: event
+    // input: event
   };
 
   var params = {
