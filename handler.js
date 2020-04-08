@@ -7,6 +7,7 @@ const docClient = new AWS.DynamoDB.DocumentClient({ region: 'eu-central-1' });
 
 module.exports.hello = async event => {
   tagEvent("custom-tag", "hello world", { custom: { tag: "data" } });
+
   var responseStatus = 200;
   var responseHeaders = {
     "Access-Control-Allow-Origin": "*", // Required for CORS support to work
@@ -26,10 +27,10 @@ module.exports.hello = async event => {
 };
 
   await docClient.get(params, (err, data) => {
-    if (data.Item === null) {
+    if (err) throw err;
+    if (data.Item === undefined) {
       responseStatus = 404;
       responseBody.data = 'Error! Entry Not found';
-
     } else {
       responseBody.data = data.Item;
     }
