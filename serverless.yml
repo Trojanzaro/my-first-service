@@ -14,10 +14,10 @@ service: my-first-service
 # app and org for use with dashboard.serverless.com
 app: my-first-app
 org: azarogoulidis
-opt:
-  stage: dev
+ 
 provider:
   name: aws
+  stage: dev
   runtime: nodejs12.x
   region: eu-central-1
   environment:
