@@ -37,7 +37,7 @@ functions:
     handler: handler.hello
     events:
       - http:
-          path: hello
+          path: hello/{userId}
           method: get
           cors: true
 resources:

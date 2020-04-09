@@ -8,6 +8,8 @@ const docClient = new AWS.DynamoDB.DocumentClient({ region: 'eu-central-1' });
 module.exports.hello = async event => {
   tagEvent("custom-tag", "hello world", { custom: { tag: "data" } });
 
+  console.log(event);
+
   var responseStatus = 200;
   var responseHeaders = {
     "Access-Control-Allow-Origin": "*", // Required for CORS support to work
@@ -22,10 +24,10 @@ module.exports.hello = async event => {
   var params = {
     TableName: 'my-first-service-dev',
     Key: {
-      id: event.queryStringParameters['id']
+      id: event.pathParameters['userid']
     },
     Item: {
-        id: event.queryStringParameters['id']
+        id: event.pathParameters['userid']
     },
 };
 
@@ -35,7 +37,7 @@ module.exports.hello = async event => {
       responseStatus = 404;
       responseBody.data = 'Error! Entry: ' + event.queryStringParameters['id'] + ' Not found';
     } else {
-      responseBody.data = data.Item;
+      responseBody = data.Item;
     }
   }).promise();
 
