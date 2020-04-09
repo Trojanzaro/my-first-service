@@ -20,10 +20,10 @@ module.exports.hello = async event => {
   var params = {
     TableName: 'my-first-service-dev',
     Key: {
-      id: event.pathParameters['userid']
+      id: event.pathParameters['userId']
     },
     Item: {
-        id: event.pathParameters['userid']
+        id: event.pathParameters['userId']
     },
 };
 
@@ -40,7 +40,7 @@ module.exports.hello = async event => {
       responseBody =  {
         errorCode: 404,
         errorType: 'Not found',
-        errorMessage: 'Error! Entry: ' + event.queryStringParameters['id'] + ' Not found'
+        errorMessage: 'Error! Entry: ' + event.pathParameters['userId'] + ' Not found'
       };
     } else {
       responseBody = data.Item;
