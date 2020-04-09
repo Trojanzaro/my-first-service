@@ -40,6 +40,10 @@ functions:
           path: hello/{userId}
           method: get
           cors: true
+          request:
+            parameters:
+              paths:
+                userId: true
 resources:
   Resources:
     TodosDynamoDbTable:

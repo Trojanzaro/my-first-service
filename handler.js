@@ -15,11 +15,7 @@ module.exports.hello = async event => {
     "Access-Control-Allow-Origin": "*", // Required for CORS support to work
     "Access-Control-Allow-Credentials": true // Required for cookies, authorization headers with HTTPS
   };
-  var responseBody = {
-    message: "Succesful Deploy",
-    data: null,
-    // input: event
-  };
+  var responseBody = {};
 
   var params = {
     TableName: 'my-first-service-dev',
@@ -32,10 +28,20 @@ module.exports.hello = async event => {
 };
 
   await docClient.get(params, (err, data) => {
-    if (err) throw err;
-    if (data.Item === undefined) {
+    if (err) {
+      responseStatus = err.statusCode;
+      responseBody =  {
+        errorCode: err.statusCode,
+        errorType: err.errorType,
+        errorMessage: err.errorMessage
+      };
+    } else if (data.Item === undefined) {
       responseStatus = 404;
-      responseBody.data = 'Error! Entry: ' + event.queryStringParameters['id'] + ' Not found';
+      responseBody =  {
+        errorCode: 404,
+        errorType: 'Not found',
+        errorMessage: 'Error! Entry: ' + event.queryStringParameters['id'] + ' Not found'
+      };
     } else {
       responseBody = data.Item;
     }
