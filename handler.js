@@ -11,10 +11,6 @@ module.exports.getUser = async event => {
   console.log(event);
 
   var responseStatus = 200;
-  var responseHeaders = {
-    "Access-Control-Allow-Origin": "*", // Required for CORS support to work
-    "Access-Control-Allow-Credentials": true // Required for cookies, authorization headers with HTTPS
-  };
   var responseBody = {};
 
   var params = {
@@ -49,7 +45,10 @@ module.exports.getUser = async event => {
 
   return {
     statusCode: responseStatus,
-    headers: responseHeaders,
+    headers: {
+      "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+      "Access-Control-Allow-Credentials": true // Required for cookies, authorization headers with HTTPS
+    },
     body: JSON.stringify(responseBody, null, 2)
   };
 
