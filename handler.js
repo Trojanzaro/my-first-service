@@ -46,6 +46,8 @@ module.exports.getUser = async event => {
   return {
     statusCode: responseStatus,
     headers: {
+      "Access-Control-Allow-Headers": "Content-Type",
+      "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
       "Access-Control-Allow-Origin": "*", // Required for CORS support to work
       "Access-Control-Allow-Credentials": true // Required for cookies, authorization headers with HTTPS
     },
