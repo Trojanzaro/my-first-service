@@ -5,7 +5,7 @@ var AWS = require('aws-sdk');
 AWS.config.update({ region: 'eu-central-1' });
 const docClient = new AWS.DynamoDB.DocumentClient({ region: 'eu-central-1' });
 
-module.exports.hello = async event => {
+module.exports.getUser = async event => {
   tagEvent("custom-tag", "hello world", { custom: { tag: "data" } });
 
   console.log(event);

@@ -33,13 +33,16 @@ provider:
         - dynamodb:DeleteItem
       Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
 functions:
-  hello:
-    handler: handler.hello
+  getUser:
+    handler: handler.getUser
     events:
       - http:
-          path: hello/{userId}
+          path: users/{userId}
           method: get
           cors: true
+          authorizer:
+            name: authorizer
+            arn: arn:aws:cognito-idp:eu-central-1:783206811116:userpool/eu-central-1_d9rUCT37w
           request:
             parameters:
               paths:
