@@ -42,7 +42,7 @@ functions:
           cors: true
           authorizer:
             name: authorizer
-            arn: arn:aws:cognito-idp:eu-central-1:783206811116:userpool/eu-central-1_d9rUCT37w
+            arn: arn:aws:cognito-idp:eu-central-1:783206811116:userpool/eu-central-1_vRjoN9I8j
           request:
             parameters:
               paths:
